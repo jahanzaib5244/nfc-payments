@@ -1,17 +1,9 @@
 {
-  "platforms": [
-    "apple",
-    "android",
-    "web"
-  ],
+  "platforms": ["apple", "android"],
   "apple": {
-    "modules": [
-      "NfcPaymentsModule"
-    ]
+    "modules": ["NfcPaymentsModule"]
   },
   "android": {
-    "modules": [
-      "expo.modules.nfcpayments.NfcPaymentsModule"
-    ]
+    "modules": ["expo.modules.nfcpayments.NfcPaymentsModule"]
   }
 }

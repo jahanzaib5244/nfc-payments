@@ -1,19 +1,5 @@
-import type { StyleProp, ViewStyle } from 'react-native';
+import { requireNativeModule } from "expo-modules-core";
 
-export type OnLoadEventPayload = {
-  url: string;
-};
-
-export type NfcPaymentsModuleEvents = {
-  onChange: (params: ChangeEventPayload) => void;
-};
-
-export type ChangeEventPayload = {
-  value: string;
-};
-
-export type NfcPaymentsViewProps = {
-  url: string;
-  onLoad: (event: { nativeEvent: OnLoadEventPayload }) => void;
-  style?: StyleProp<ViewStyle>;
-};
+// It loads the native module object from the JSI or falls back to
+// the bridge module (from NativeModulesProxy) if the remote debugger is on.
+export default requireNativeModule("NfcPayments");

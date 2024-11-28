@@ -1,6 +1,6 @@
 {
   "name": "nfc-payments",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "native module for add virtual card in digital wallet like Apple pay, Google pay and samsung pay",
   "main": "build/index.js",
   "types": "build/index.d.ts",

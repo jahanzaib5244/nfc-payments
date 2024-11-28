@@ -1,48 +1,42 @@
+import PassKit
 import ExpoModulesCore
 
 public class NfcPaymentsModule: Module {
-  // Each module class must implement the definition function. The definition consists of components
-  // that describes the module's functionality and behavior.
-  // See https://docs.expo.dev/modules/module-api for more details about available components.
   public func definition() -> ModuleDefinition {
-    // Sets the name of the module that JavaScript code will use to refer to the module. Takes a string as an argument.
-    // Can be inferred from module's class name, but it's recommended to set it explicitly for clarity.
-    // The module will be accessible from `requireNativeModule('NfcPayments')` in JavaScript.
     Name("NfcPayments")
 
-    // Sets constant properties on the module. Can take a dictionary or a closure that returns a dictionary.
-    Constants([
-      "PI": Double.pi
-    ])
-
-    // Defines event names that the module can send to JavaScript.
-    Events("onChange")
-
-    // Defines a JavaScript synchronous function that runs the native code on the JavaScript thread.
-    Function("hello") {
-      return "Hello world! 👋"
-    }
-
-    // Defines a JavaScript function that always returns a Promise and whose native code
-    // is by default dispatched on the different thread than the JavaScript runtime runs on.
-    AsyncFunction("setValueAsync") { (value: String) in
-      // Send an event to JavaScript.
-      self.sendEvent("onChange", [
-        "value": value
-      ])
-    }
-
-    // Enables the module to be used as a native view. Definition components that are accepted as part of the
-    // view definition: Prop, Events.
-    View(NfcPaymentsView.self) {
-      // Defines a setter for the `url` prop.
-      Prop("url") { (view: NfcPaymentsView, url: URL) in
-        if view.webView.url != url {
-          view.webView.load(URLRequest(url: url))
-        }
+    Function("addCardToAppleWallet") { (encryptedPassData: String, activationData: String, ephemeralPublicKey: String) -> [String: Any] in
+      guard PKPassLibrary.isPassLibraryAvailable() else {
+        throw NSError(domain: "NfcPayments", code: 0, userInfo: [NSLocalizedDescriptionKey: "PassLibrary is not available."])
+      }
+        print(encryptedPassData,activationData,ephemeralPublicKey)
+      guard let passData = Data(base64Encoded: encryptedPassData),
+            let activation = Data(base64Encoded: activationData),
+            let publicKey = Data(base64Encoded: ephemeralPublicKey) else {
+        throw NSError(domain: "NfcPayments", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid base64-encoded data."])
       }
 
-      Events("onLoad")
+      // Initialize the request for adding a payment pass
+      let addRequest = PKAddPaymentPassRequest()
+      addRequest.encryptedPassData = passData
+      addRequest.activationData = activation
+      addRequest.ephemeralPublicKey = publicKey
+
+      // Simulate the process (no UI)
+      let success = processAddPaymentPassRequest(addRequest)
+
+      // Return a result object to JavaScript
+      return [
+        "success": success,
+        "message": success ? "Card added successfully" : "Failed to add card"
+      ]
     }
+  }
+
+  // Helper function to simulate adding a payment pass
+  private func processAddPaymentPassRequest(_ request: PKAddPaymentPassRequest) -> Bool {
+    // Here, you would handle the logic for adding the pass without UI.
+    // For now, this function simulates success.
+    return true
   }
 }
