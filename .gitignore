@@ -55,6 +55,7 @@ yarn-error.log
 
 # Expo
 .expo/*
+*.tgz
 
 node_modules/
 example/

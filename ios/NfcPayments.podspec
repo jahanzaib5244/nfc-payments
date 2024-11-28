@@ -1,8 +1,10 @@
 require 'json'
 
-package = JSON.parse(File.read(File.join(__dir__, '..', 'package.json')))
+# Load metadata from the package.json (use the correct path here)
+package = JSON.parse(File.read(File.join(__dir__, '..', 'package.json')))  # Go up one directory to reach package.json
 
 Pod::Spec.new do |s|
+  # Basic info
   s.name           = 'NfcPayments'
   s.version        = package['version']
   s.summary        = package['description']
@@ -10,20 +12,26 @@ Pod::Spec.new do |s|
   s.license        = package['license']
   s.author         = package['author']
   s.homepage       = package['homepage']
-  s.platforms      = {
-    :ios => '15.1',
-    :tvos => '15.1'
-  }
+  s.platforms      = { :ios => '15.1' }
   s.swift_version  = '5.4'
-  s.source         = { git: 'https://github.com/jahanzaib5244/nfc-payments' }
+
+  # Source of the pod
+  s.source         = { git: package['repository']['url'], tag: s.version }
+
+  # Use static frameworks to integrate with ExpoModulesCore
   s.static_framework = true
 
+  # Dependencies
   s.dependency 'ExpoModulesCore'
 
-  # Swift/Objective-C compatibility
+  # Include all Swift and Objective-C source files
+  s.source_files = "ios/**/*.{h,m,mm,swift,hpp,cpp}"
+
+  # Specify the module map
   s.pod_target_xcconfig = {
     'DEFINES_MODULE' => 'YES',
   }
 
-  s.source_files = "**/*.{h,m,mm,swift,hpp,cpp}"
+  # Resource bundles (if you have any resources like .xcassets, localization files, etc.)
+  s.resources = 'ios/**/*.xcassets'
 end
