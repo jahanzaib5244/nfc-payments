@@ -12,11 +12,15 @@ Pod::Spec.new do |s|
   s.license        = package['license']
   s.author         = package['author']
   s.homepage       = package['homepage']
-  s.platforms      = { :ios => '15.1' }
+  s.platforms      = {:ios => '13.4'}
   s.swift_version  = '5.4'
 
   # Source of the pod
   s.source         = { git: package['repository']['url'], tag: s.version }
+  # s.source         = { :git => "https://github.com/jahanzaib5244/nfc-payments.git" }
+  s.homepage       = 'https://github.com/jahanzaib5244/nfc-payments'
+
+  # iOS platforms support
 
   # Use static frameworks to integrate with ExpoModulesCore
   s.static_framework = true
@@ -30,6 +34,7 @@ Pod::Spec.new do |s|
   # Specify the module map
   s.pod_target_xcconfig = {
     'DEFINES_MODULE' => 'YES',
+    'SWIFT_COMPILATION_MODE' => 'wholemodule'
   }
 
   # Resource bundles (if you have any resources like .xcassets, localization files, etc.)
