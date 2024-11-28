@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "nfc-payments": ["../src/index"],
+      "nfc-payments/*": ["../src/*"]
+    }
+  }
+}

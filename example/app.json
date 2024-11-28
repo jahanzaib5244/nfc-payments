@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "nfc-payments-example",
+    "slug": "nfc-payments-example",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "expo.modules.nfcpayments.example"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "expo.modules.nfcpayments.example"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
